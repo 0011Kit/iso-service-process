@@ -1,4 +1,10 @@
 package com.isoservice.process.dto.request;
 
-public class BookingInitRequest {
-}
+import java.time.Instant;
+
+public record BookingInitRequest (
+    String clientName,
+    String email,
+    Integer numberOfPax,
+    Instant appointmentDate
+    ){}
