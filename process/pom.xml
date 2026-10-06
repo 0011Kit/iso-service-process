@@ -11,8 +11,8 @@
 	<groupId>com.isoservice</groupId>
 	<artifactId>process</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name/>
-	<description/>
+    <name>iso-service-process</name>
+    <description/>
 	<url/>
 	<licenses>
 		<license/>
@@ -79,6 +79,13 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build-info</goal>
+                        </goals>
+                    </execution>
+                </executions>
 			</plugin>
 		</plugins>
 	</build>

@@ -1,7 +1,11 @@
 package com.isoservice.process.mapper;
 
 import com.isoservice.process.domain.BookingStatus;
+import com.isoservice.process.dto.response.BookingInfoResponse;
+import com.isoservice.process.dto.response.BookingInitResponse;
 import com.isoservice.process.entity.BookingEntity;
+
+import java.util.List;
 
 public class BookingMapper {
 
@@ -20,20 +24,20 @@ public class BookingMapper {
     public static void applyDomainStatus(BookingEntity entity, BookingStatus status) {
         switch (status) {
             case BookingStatus.Submitted s -> {
-                entity.setStatusType(BookingEntity.StatusType.SUBMITTED);
+                entity.setStatusType(BookingEntity.BookingStatusType.SUBMITTED);
             }
             case BookingStatus.PendingReview(var photographerId, var inquiredAt) -> {
-                entity.setStatusType(BookingEntity.StatusType.PENDING_REVIEW);
+                entity.setStatusType(BookingEntity.BookingStatusType.PENDING_REVIEW);
                 entity.setPhotographerId(photographerId);
                 entity.setStatusTimestamp(inquiredAt);
             }
             case BookingStatus.Approved(var photographerId, var approvedAt) -> {
-                entity.setStatusType(BookingEntity.StatusType.APPROVED);
+                entity.setStatusType(BookingEntity.BookingStatusType.APPROVED);
                 entity.setPhotographerId(photographerId);
                 entity.setStatusTimestamp(approvedAt);
             }
             case BookingStatus.Rejected(var photographerId, var rejectedAt, var reason) -> {
-                entity.setStatusType(BookingEntity.StatusType.REJECTED);
+                entity.setStatusType(BookingEntity.BookingStatusType.REJECTED);
                 entity.setPhotographerId(photographerId);
                 entity.setStatusTimestamp(rejectedAt);
                 entity.setStatusReason(reason);
@@ -41,5 +45,34 @@ public class BookingMapper {
         }
     }
 
+    public static BookingInitResponse toBookingInitResponse (BookingEntity entity){
+        return new BookingInitResponse(
+                entity.getClientName(),
+                entity.getEmail(),
+                entity.getAppointmentDate(),
+                entity.getNumberOfPax(),
+                entity.getStatusType().name()
+        );
+    }
+
+    public static BookingInfoResponse toBookingInfoResponse (BookingEntity entity){
+        return new BookingInfoResponse(
+          entity.getId(),
+          entity.getClientName(),
+          entity.getEmail(),
+          entity.getNumberOfPax(),
+          entity.getAppointmentDate(),
+          entity.getStatusType().name(),
+          entity.getPhotographerId(),
+          entity.getStatusReason(),
+          entity.getStatusReason()
+        );
+    }
+
+    public static List<BookingInfoResponse> toBookingInfoResponseList (List<BookingEntity> entityList){
+        return entityList.stream()
+                .map(BookingMapper::toBookingInfoResponse)
+                .toList();
+    }
 
 }

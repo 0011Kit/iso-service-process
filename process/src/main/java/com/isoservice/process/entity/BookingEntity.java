@@ -15,20 +15,22 @@ public class BookingEntity {
 
     @Column(name = "client_name")
     private String clientName;
+
+    @Column(name = "email")
     private String email;
 
     @Column(name = "number_of_pax")
     private Integer numberOfPax;
+
     @Column(name = "appointment_date")
     private Instant appointmentDate;
 
-
     @Column(name = "status_type")
     @Enumerated(EnumType.STRING)
-    private StatusType statusType;
+    private BookingStatusType bookingStatusType;
 
     @Column(name = "photographer_id")
-    private String photographerId;
+    private UUID photographerId;
 
     @Column(name = "status_timestamp")
     private Instant statusTimestamp;
@@ -36,7 +38,7 @@ public class BookingEntity {
     @Column(name = "status_reason")
     private String statusReason;
 
-    public enum StatusType {
+    public enum BookingStatusType {
         SUBMITTED, PENDING_REVIEW, APPROVED, REJECTED
     }
 
@@ -80,19 +82,19 @@ public class BookingEntity {
         this.appointmentDate = appointmentDate;
     }
 
-    public StatusType getStatusType() {
-        return statusType;
+    public BookingStatusType getStatusType() {
+        return bookingStatusType;
     }
 
-    public void setStatusType(StatusType statusType) {
-        this.statusType = statusType;
+    public void setStatusType(BookingStatusType bookingStatusType) {
+        this.bookingStatusType = bookingStatusType;
     }
 
-    public String getPhotographerId() {
+    public UUID getPhotographerId() {
         return photographerId;
     }
 
-    public void setPhotographerId(String photographerId) {
+    public void setPhotographerId(UUID photographerId) {
         this.photographerId = photographerId;
     }
 

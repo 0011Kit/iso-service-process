@@ -6,5 +6,6 @@ public record BookingInitRequest (
     String clientName,
     String email,
     Integer numberOfPax,
-    Instant appointmentDate
+    Instant appointmentDate,
+    String photographerName
     ){}

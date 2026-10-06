@@ -4,12 +4,21 @@ server:
   servlet:
     context-path: /api
 
-spring.datasource:
-  url: jdbc:postgresql://localhost:5432/iso_process
-  username: postgres
-  password: 132435
-  driver-class-name: org.postgresql.Driver
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/iso_process
+    username: postgres
+    password: 132435
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  health:
+    db:
+      enabled: true
