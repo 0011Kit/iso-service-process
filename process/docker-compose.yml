@@ -2,13 +2,22 @@ services:
   postgres:
     image: postgres:17
     environment:
-      POSTGRES_DB: iso_process
-      POSTGRES_USER: postgres
+      POSTGRES_DB: "iso_process"
+      POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "132435"
     ports:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+
+  app:
+    image: iso-service-process_v1.0
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/iso_process
+    depends_on:
+      - postgres
 
 volumes:
   pgdata:
