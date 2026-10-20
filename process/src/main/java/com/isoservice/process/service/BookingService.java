@@ -32,6 +32,7 @@ public class BookingService {
 
 
     public BookingEntity initBooking(BookingInitRequest bookingRequest){
+        //ttejfnsmrjmv
         String methodName = "[initBooking] - ";
         BookingEntity bookingEntity = new BookingEntity();
         bookingEntity.setClientName(bookingRequest.clientName());
