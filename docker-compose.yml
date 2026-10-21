@@ -16,7 +16,7 @@ services:
       retries: 10
 
   app:
-    image: iso-service-process:1.4
+    image: iso-service-process:1.5
     ports:
       - "8080:8080"
     mem_limit: 512m
