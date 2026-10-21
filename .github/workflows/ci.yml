@@ -8,6 +8,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     services:
       postgres:
@@ -37,3 +40,18 @@ jobs:
         run: ./mvnw -B verify
         env:
           POSTGRES_PASSWORD: ci_password
+
+      - name: Login to GHCR
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build image
+        run: docker build -t ghcr.io/0011kit/iso-service-process:${{ github.sha }} .
+
+      - name: Push image
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: docker push ghcr.io/0011kit/iso-service-process:${{ github.sha }}
